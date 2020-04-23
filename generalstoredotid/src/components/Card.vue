@@ -16,6 +16,7 @@
         </div>
         <div class="card-action">
           <a href="#" v-on:click.prevent="addToCart">Add To Cart</a>
+          <input v-if="loggedIn" type="number" id="amount" min="0" v-model="amount" class="validate">
         </div>
       </div>
     </div>
@@ -30,6 +31,11 @@ export default {
   props: {
     product: Object
   },
+  data () {
+    return {
+      amount: 0
+    }
+  },
   methods: {
     addToCart: function () {
       if (localStorage.getItem('token')) {
@@ -37,6 +43,11 @@ export default {
       } else {
         M.toast({ html: 'Log in to be able to make purchases' })
       }
+    }
+  },
+  computed: {
+    loggedIn () {
+      return this.$store.state.loggedIn
     }
   }
 }
