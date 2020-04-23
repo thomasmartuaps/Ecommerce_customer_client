@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import ProductList from '../views/ProductList.vue'
 import LoginRegister from '../views/LoginRegister.vue'
 import Checkout from '../views/Checkout.vue'
+import History from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ const routes = [
         path: '/checkout',
         name: 'Checkout',
         component: Checkout
+      },
+      {
+        path: '/history',
+        name: 'History',
+        component: History
       }
     ]
   },

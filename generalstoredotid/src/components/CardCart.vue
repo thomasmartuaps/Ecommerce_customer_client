@@ -64,5 +64,6 @@ export default {
 </script>
 
 <style>
-
+.card-action {
+}
 </style>

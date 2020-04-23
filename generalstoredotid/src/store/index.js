@@ -11,14 +11,25 @@ export default new Vuex.Store({
     loggedIn: false,
     heroku: 'https://generalstore-server-90210.herokuapp.com',
     products: [],
-    carts: []
+    carts: [],
+    checked: []
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
       state.products = payload
     },
     SET_CART (state, payload) {
-      state.carts = payload
+      const carts = []
+      const checked = []
+      payload.forEach(el => {
+        if (el.status) {
+          checked.push(el)
+        } else {
+          carts.push(el)
+        }
+      })
+      state.carts = carts
+      state.checked = checked
     }
   },
   actions: {

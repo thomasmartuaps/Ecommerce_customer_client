@@ -1,15 +1,14 @@
 <template>
   <div class="product-list">
     <br>
-    <h5>Click the button at bottom left to pay. Or click website logo to return. </h5>
-    <button class="btn-large fixed" @click.prevent="checkout"><i class="material-icons left large">local_offer</i> <b>Pay!</b></button>
+    <h4>Your Purchase History</h4>
     <Loading v-if="isLoading"/>
     <div v-else-if="carts.length > 0" class="row">
       <CardCart class="item hoverable" v-for="cart in carts" :key="cart.id" :cart="cart"/>
       <br>
     </div>
     <div v-else>
-      <h4>No items on your cart now</h4>
+      <h4>You never bought anything from our store</h4>
     </div>
   </div>
 </template>
@@ -18,7 +17,7 @@ import CardCart from '../components/CardCart.vue'
 import Loading from '../components/Loading.vue'
 
 export default {
-  name: 'ProductList',
+  name: 'History',
   props: {
     // msg: String
   },
@@ -33,19 +32,13 @@ export default {
   },
   computed: {
     carts: function () {
-      return this.$store.state.carts
+      return this.$store.state.checked
     },
     isLoading: function () {
       return this.$store.state.isLoading
     }
   },
   methods: {
-    back: function () {
-      this.$router.push('/products')
-    },
-    checkout: function () {
-      this.$store.dispatch('checkout')
-    }
   },
   created () {
     this.$store.dispatch('getCart')
@@ -67,10 +60,5 @@ export default {
     text-align: left;
     margin: 2vw;
     padding: 1vw;
-  }
-  .fixed {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
   }
 </style>
