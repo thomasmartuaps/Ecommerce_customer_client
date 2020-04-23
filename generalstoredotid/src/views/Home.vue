@@ -1,14 +1,15 @@
 <template>
   <div class="home">
     <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
+      <nav class="green darken-3">
+        <div class="nav-wrapper green darken-3">
           <a href="#" @click.prevent class="brand-logo right"><i class="material-icons large">shopping_basket</i> GeneralStore.com</a>
           <ul v-if="!loggedIn" id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="" @click.prevent="loginPage">Login</a></li>
           </ul>
           <ul v-else id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="" @click.prevent>Welcome back, {{ user }}!</a></li>
+            <li><a href="" @click.prevent="goCheckout">Checkout</a></li>
             <li><a href="" @click.prevent="logout">Logout</a></li>
           </ul>
         </div>
@@ -32,6 +33,9 @@ export default {
     logout: function () {
       localStorage.clear()
       this.$store.state.loggedIn = false
+    },
+    goCheckout: function () {
+      this.$router.push('/checkout')
     }
   },
   computed: {

@@ -10,11 +10,15 @@ export default new Vuex.Store({
   state: {
     loggedIn: false,
     heroku: 'https://generalstore-server-90210.herokuapp.com',
-    products: []
+    products: [],
+    carts: []
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
       state.products = payload
+    },
+    SET_CART (state, payload) {
+      state.carts = payload
     }
   },
   actions: {
@@ -62,6 +66,41 @@ export default new Vuex.Store({
           localStorage.setItem('email', response.data.email)
           localStorage.setItem('token', response.data.token)
           router.push('/products')
+        })
+        .catch(err => {
+          M.toast({ html: err.response.data })
+        })
+    },
+    addCart ({ commit, dispatch }, productData) {
+      axios({
+        method: 'POST',
+        url: `${this.state.heroku}/cart`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          ProductId: productData.ProductId,
+          amount: productData.amount
+        }
+      })
+        .then(response => {
+          M.toast({ html: 'Added item to the cart' })
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          M.toast({ html: err.response.data })
+        })
+    },
+    getCart ({ commit, dispatch }) {
+      axios({
+        method: 'GET',
+        url: `${this.state.heroku}/cart`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          commit('SET_CART', response.data)
         })
         .catch(err => {
           M.toast({ html: err.response.data })
