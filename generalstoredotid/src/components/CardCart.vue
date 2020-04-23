@@ -11,9 +11,13 @@
           <p>Total: ${{ total }}</p>
           <br>
         </div>
-        <div class="card-action">
-          <a href="#" v-on:click.prevent="addToCart">Change Amount</a>
-          <input v-if="loggedIn" type="number" id="amount" min="0" v-model="amount" class="validate">
+        <div v-if="!status" class="card-action">
+          <a href="#" v-on:click.prevent="changeAmt">Change Amount</a>
+          <input type="number" id="amount" v-model="amount" class="validate">
+          <button class="btn" @click.prevent="remove">Remove</button>
+        </div>
+        <div v-else class="card-action">
+          <a href="#" v-on:click.prevent>This purchase has been checked out</a>
         </div>
       </div>
     </div>
@@ -34,18 +38,23 @@ export default {
     }
   },
   methods: {
-    addToCart: function () {
+    changeAmt: function () {
       if (localStorage.getItem('token')) {
-        this.$store.dispatch('addCart', { ProductId: this.product.id, amount: this.amount })
-        M.toast({ html: 'You shoould be able to add cart' })
+        this.$store.dispatch('changeAmt', { id: this.cart.id, amount: this.amount })
       } else {
         M.toast({ html: 'Log in to be able to make purchases' })
       }
+    },
+    remove: function () {
+      this.$store.dispatch('remove', { id: this.cart.id })
     }
   },
   computed: {
     loggedIn () {
       return this.$store.state.loggedIn
+    },
+    status () {
+      return this.cart.status
     },
     total () {
       return this.cart.Product.price * this.cart.amount

@@ -2,6 +2,7 @@
   <div class="product-list">
     <br>
     <button class="btn" @click.prevent="back">Back</button>
+    <button class="btn" @click.prevent="checkout">Checkout</button>
     <Loading v-if="isLoading"/>
     <div v-else class="row">
       <CardCart class="item hoverable" v-for="cart in carts" :key="cart.id" :cart="cart"/>
@@ -38,6 +39,9 @@ export default {
   methods: {
     back: function () {
       this.$router.push('/products')
+    },
+    checkout: function () {
+      this.$store.dispatch('checkout')
     }
   },
   created () {

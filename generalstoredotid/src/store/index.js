@@ -49,7 +49,7 @@ export default new Vuex.Store({
           router.push('/products')
         })
         .catch(err => {
-          M.toast({ html: err.response.data })
+          M.toast({ html: err.response.data.message })
         })
     },
     register ({ commit, dispatch }, registerData) {
@@ -68,7 +68,7 @@ export default new Vuex.Store({
           router.push('/products')
         })
         .catch(err => {
-          M.toast({ html: err.response.data })
+          M.toast({ html: err.response.data.message })
         })
     },
     addCart ({ commit, dispatch }, productData) {
@@ -88,7 +88,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err.response.data)
-          M.toast({ html: err.response.data })
+          M.toast({ html: err.response.data.message })
         })
     },
     getCart ({ commit, dispatch }) {
@@ -104,6 +104,60 @@ export default new Vuex.Store({
         })
         .catch(err => {
           M.toast({ html: err.response.data })
+        })
+    },
+    changeAmt ({ commit, dispatch }, change) {
+      axios({
+        method: 'PATCH',
+        url: `${this.state.heroku}/cart/${change.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          amount: change.amount
+        }
+      })
+        .then(response => {
+          dispatch('getCart')
+          M.toast({ html: `changed amount to ${response.data.amount}` })
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          M.toast({ html: err.response.data.message })
+        })
+    },
+    remove ({ commit, dispatch }, destroy) {
+      axios({
+        method: 'DELETE',
+        url: `${this.state.heroku}/cart/${destroy.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          dispatch('getCart')
+          M.toast({ html: response.data.message })
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          M.toast({ html: err.response.data.message })
+        })
+    },
+    checkout ({ commit, dispatch }) {
+      axios({
+        method: 'PATCH',
+        url: `${this.state.heroku}/cart`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          dispatch('getCart')
+          M.toast({ html: response.data.message })
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          M.toast({ html: err.response.data.message })
         })
     }
   },
