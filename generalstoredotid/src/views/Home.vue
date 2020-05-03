@@ -1,14 +1,15 @@
 <template>
   <div class="home">
     <div class="navbar-fixed">
-      <nav class="green darken-3">
-        <div class="nav-wrapper green darken-3">
+      <nav class="navbar-custom-color">
+        <div class="nav-wrapper navbar-custom-color">
           <a href="#" @click.prevent="goProduct" class="brand-logo right site-name"><i class="material-icons large">shopping_basket</i> GeneralStore.com</a>
           <ul v-if="!loggedIn" id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="" @click.prevent="loginPage">Login</a></li>
+            <li><a href="" @click.prevent="loginPage"><b>Login</b></a></li>
           </ul>
           <ul v-else id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="" class="site-name" @click.prevent="goProduct">Welcome back, {{ user }}!</a></li>
+            <li><a href="" @click.prevent="goProduct">Product List</a></li>
             <li><a href="" @click.prevent="goCheckout">Shopping Cart</a></li>
             <li><a href="" @click.prevent="goHistory">Purchase History</a></li>
             <li><a href="" @click.prevent="logout">Logout</a></li>
@@ -34,6 +35,7 @@ export default {
     logout: function () {
       localStorage.clear()
       this.$store.state.loggedIn = false
+      this.$router.push('/products')
     },
     goCheckout: function () {
       this.$router.push('/checkout')
@@ -63,7 +65,17 @@ export default {
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto&display=swap');
 .site-name{
-  font-family: 'Pacifico', cursive;
+  font-family: 'Libre Franklin', sans-serif;
+  font-weight: bold;
+  margin-right: 1vw;
+}
+body {
+  background-color: #FFFBE6;
+}
+.navbar-custom-color {
+  background-color: #356859;
+  color: #B9E4C9;
 }
 </style>

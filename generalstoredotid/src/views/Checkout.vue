@@ -1,8 +1,8 @@
 <template>
   <div class="product-list">
     <br>
-    <h5>Click the button at bottom left to pay. Or click website logo to return. </h5>
-    <button class="btn-large fixed" @click.prevent="checkout"><i class="material-icons left large">local_offer</i> <b>Pay!</b></button>
+    <h4 class="page-heading">Your Current Cart</h4>
+    <button class="btn-large fixed pay-button" @click.prevent="checkout"><i class="material-icons left large">local_offer</i> <b>Pay!</b></button>
     <Loading v-if="isLoading"/>
     <div v-else-if="carts.length > 0" class="row">
       <CardCart class="item hoverable" v-for="cart in carts" :key="cart.id" :cart="cart"/>
@@ -72,5 +72,16 @@ export default {
     position: fixed;
     bottom: 10px;
     right: 10px;
+  }
+  .pay-button {
+    background-color: #FD5523!important;
+    margin: 1vw;
+  }
+  .pay-button:hover {
+    background-color: rgb(247, 121, 48)!important;
+  }
+  .page-heading {
+    color: black;
+    font-weight: bold;
   }
 </style>

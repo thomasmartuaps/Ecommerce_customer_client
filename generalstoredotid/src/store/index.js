@@ -12,7 +12,8 @@ export default new Vuex.Store({
     heroku: 'https://generalstore-server-90210.herokuapp.com',
     products: [],
     carts: [],
-    checked: []
+    checked: [],
+    isLoading: false
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
@@ -30,10 +31,14 @@ export default new Vuex.Store({
       })
       state.carts = carts
       state.checked = checked
+    },
+    SET_LOADING (state, payload) {
+      state.isLoading = payload
     }
   },
   actions: {
     fetchProducts ({ commit }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'GET',
         url: `${this.state.heroku}/product`
@@ -44,8 +49,12 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err.response.data)
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     login ({ commit, dispatch }, loginData) {
+      commit('SET_LOADING', true)
       axios({
         method: 'POST',
         url: `${this.state.heroku}/login`,
@@ -61,6 +70,9 @@ export default new Vuex.Store({
         })
         .catch(err => {
           M.toast({ html: err.response.data.message })
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
         })
     },
     register ({ commit, dispatch }, registerData) {
@@ -83,6 +95,7 @@ export default new Vuex.Store({
         })
     },
     addCart ({ commit, dispatch }, productData) {
+      commit('SET_LOADING', true)
       axios({
         method: 'POST',
         url: `${this.state.heroku}/cart`,
@@ -101,8 +114,12 @@ export default new Vuex.Store({
           console.log(err.response.data)
           M.toast({ html: err.response.data.message })
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     getCart ({ commit, dispatch }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'GET',
         url: `${this.state.heroku}/cart`,
@@ -116,8 +133,12 @@ export default new Vuex.Store({
         .catch(err => {
           M.toast({ html: err.response.data })
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     changeAmt ({ commit, dispatch }, change) {
+      commit('SET_LOADING', true)
       axios({
         method: 'PATCH',
         url: `${this.state.heroku}/cart/${change.id}`,
@@ -136,8 +157,12 @@ export default new Vuex.Store({
           console.log(err.response.data)
           M.toast({ html: err.response.data.message })
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     remove ({ commit, dispatch }, destroy) {
+      commit('SET_LOADING', true)
       axios({
         method: 'DELETE',
         url: `${this.state.heroku}/cart/${destroy.id}`,
@@ -153,8 +178,12 @@ export default new Vuex.Store({
           console.log(err.response.data)
           M.toast({ html: err.response.data.message })
         })
+        .finally(_ => {
+          commit('SET_LOADING', false)
+        })
     },
     checkout ({ commit, dispatch }) {
+      commit('SET_LOADING', true)
       axios({
         method: 'PATCH',
         url: `${this.state.heroku}/cart`,
@@ -169,6 +198,9 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err.response.data)
           M.toast({ html: err.response.data.message })
+        })
+        .finally(_ => {
+          commit('SET_LOADING', false)
         })
     }
   },

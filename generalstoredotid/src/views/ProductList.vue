@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <h4 class="left-side"><b>All Products</b></h4>
+    <h4 class="left-side cat-menu"><b>All Products</b></h4>
     <Loading v-if="isLoading"/>
     <div v-else class="row">
       <Card class="item hoverable" v-for="product in products" :key="product.id" :product="product"/>
@@ -51,6 +51,9 @@ export default {
   }
   .item {
     margin: 2vw;
+  }
+  .cat-menu{
+    color: black;
   }
   .left-side {
     text-align: left;

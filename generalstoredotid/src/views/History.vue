@@ -1,7 +1,7 @@
 <template>
   <div class="product-list">
     <br>
-    <h4>Your Purchase History</h4>
+    <h4 class="page-heading">Your Purchase History</h4>
     <Loading v-if="isLoading"/>
     <div v-else-if="carts.length > 0" class="row">
       <CardCart class="item hoverable" v-for="cart in carts" :key="cart.id" :cart="cart"/>
@@ -60,5 +60,9 @@ export default {
     text-align: left;
     margin: 2vw;
     padding: 1vw;
+  }
+  .page-heading {
+    color:black;
+    font-weight: bold;
   }
 </style>

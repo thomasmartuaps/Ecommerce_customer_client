@@ -3,13 +3,13 @@
     <div class="col s2">
       <div class="card">
         <div class="card-image">
-          <img height="250px" width="250px" :src="product.image_url">s
+          <img height="250px" width="250px" :src="placeholder">
         </div>
         <div class="card-content">
-          <p><b>{{ product.name }}</b></p>
-          <p>Price: ${{ product.price }} Stock: {{ product.stock }}</p>
+          <p class="product-title"><b>{{ product.name }}</b></p>
+          <p class="desc">Price: ${{ product.price }} Stock: {{ product.stock }}</p>
           <br>
-          <a class="waves-effect waves-light btn-small">{{ product.category }}
+          <a class="waves-effect waves-light btn-small cat-button">{{ product.category }}
             <i v-if="product.category === 'Toys'" class="material-icons right">motorcycle</i>
             <i v-if="product.category === 'Techs'" class="material-icons right">computer</i>
             <i v-if="product.category === 'General'" class="material-icons right">local_mall</i></a>
@@ -49,11 +49,26 @@ export default {
   computed: {
     loggedIn () {
       return this.$store.state.loggedIn
+    },
+    placeholder () {
+      return `https://api.adorable.io/avatars/285/${this.product.name}.png`
     }
   }
 }
 </script>
 
 <style>
-
+  .product-title {
+    color: #FD5523;
+  }
+  .card {
+    /* background-color: #B9E4C9; */
+    padding: 5px;
+  }
+  .desc {
+    color: #6e6e6e;
+  }
+  .cat-button {
+    background-color: #37966F!important;
+  }
 </style>
